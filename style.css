@@ -1,0 +1,167 @@
+:root {
+  --bg-color: #f5f7fb;
+  --text-color: #1f2937;
+  --card-bg: #ffffff;
+  --accent: #6366f1;
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+body.dark {
+  --bg-color: #111827;
+  --text-color: #f9fafb;
+  --card-bg: #1f2937;
+  --accent: #8b5cf6;
+  --shadow: 0 8px 20px rgba(255, 255, 255, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.container {
+  width: min(1200px, 90%);
+  margin: 0 auto;
+}
+
+.header {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.header button {
+  margin-top: 15px;
+  background: white;
+  color: #4f46e5;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+section {
+  margin: 40px 0;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.experience,
+.chat-section {
+  background: var(--card-bg);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.chat-box {
+  min-height: 180px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  overflow-y: auto;
+  background: #fff;
+  color: #111827;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+.user {
+  background: #dbeafe;
+}
+
+.bot {
+  background: #ede9fe;
+}
+
+.chat-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.chat-controls input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+}
+
+.chat-controls button {
+  padding: 12px 18px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.note {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-controls {
+    flex-direction: column;
+  }
+}

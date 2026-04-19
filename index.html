@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Әзірлеушіге арналған ЖИ-құралдары</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1>Әзірлеушіге арналған ЖИ-құралдары</h1>
+      <p>Жасанды интеллекті веб-әзірлеуде қолдануға арналған шағын таныстырылым</p>
+      <button id="themeToggle">Қараңғы тақырып</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>ЖИ құралдары</h2>
+      <div class="cards">
+        <div class="card hidden">
+          <h3>ChatGPT</h3>
+          <p>ChatGPT — мәтін жазуға, код түсіндіруге, идея ұсынуға және сұрақтарға жауап беруге көмектесетін ЖИ құралы. Ол оқу мен бағдарламалау кезінде өте пайдалы.</p>
+          <p><strong>Не істей алады:</strong> код жазу, қате табу, мәтін құрастыру, түсіндіру.</p>
+          <a href="https://chatgpt.com" target="_blank">Ресми сайт</a>
+        </div>
+
+        <div class="card hidden">
+          <h3>GitHub Copilot</h3>
+          <p>GitHub Copilot — код редакторында тікелей ұсыныстар беретін ЖИ көмекші. Ол функция, цикл, шарт және басқа код бөліктерін жылдам жазуға көмектеседі.</p>
+          <p><strong>Не істей алады:</strong> кодты толықтыру, үлгі ұсыну, өнімділікті арттыру.</p>
+          <a href="https://github.com/features/copilot" target="_blank">Ресми сайт</a>
+        </div>
+
+        <div class="card hidden">
+          <h3>Claude</h3>
+          <p>Claude — мәтін талдауға, ұзақ жауаптар беруге және түсіндірме жасауға ыңғайлы ЖИ жүйесі. Ол мазмұнды құрылымды түрде ұсынуға көмектеседі.</p>
+          <p><strong>Не істей алады:</strong> мәтін өңдеу, жауап беру, талдау жасау, жоспар құру.</p>
+          <a href="https://claude.ai" target="_blank">Ресми сайт</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience">
+      <h2>Менің тәжірибем</h2>
+      <p>
+        Мен бұл жұмысты орындау барысында ChatGPT құралын қолданып көрдім. Ол маған HTML құрылымын,
+        CSS стилін және JavaScript логикасын түсінуге көмектесті. Кейбір жауаптарда кодтың құрылымы ыңғайлы
+        болды, бірақ кейбір жерлерін өзім түзетіп, ықшамдадым.
+      </p>
+      <p>
+        Маған ең көп көмектескен құрал — ChatGPT, себебі ол кодты түсіндіріп бере алды. Кейде ЖИ кейбір
+        бөліктерді артық немесе жалпы түрде ұсынады, сондықтан мен оны тапсырма талабына сай өзгертіп отырдым.
+        Менің ойымша, 5 жылдан кейін ЖИ әзірлеушілердің жұмысын жеңілдетеді, бірақ адам логикасы мен бақылауы
+        бәрібір өте маңызды болып қалады.
+      </p>
+    </section>
+
+    <section class="chat-section">
+      <h2>Қарапайым ЖИ-чат</h2>
+      <div class="chat-box" id="chatBox">
+        <div class="message bot">Сәлем! Сұрағыңызды жазыңыз.</div>
+      </div>
+
+      <div class="chat-controls">
+        <input type="text" id="userInput" placeholder="Сұрағыңызды енгізіңіз..." />
+        <button id="sendBtn">Жіберу</button>
+      </div>
+
+      <p>Жіберілген сұраныстар саны: <span id="counter">0</span></p>
+      <p class="note">
+        Ескерту: нақты API кілтін GitHub-қа жариялауға болмайды. Алдымен жергілікті түрде тексеріңіз.
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
