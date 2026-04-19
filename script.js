@@ -8,16 +8,22 @@ const cards = document.querySelectorAll(".card");
 let requestCount = 0;
 
 /**
- * Қараңғы және ашық тақырыпты ауыстырады
+ * Қараңғы және ашық режимді ауыстырады
  */
 themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
+
+  if (document.body.classList.contains("dark")) {
+    themeToggle.textContent = "Ашық режим";
+  } else {
+    themeToggle.textContent = "Қараңғы режим";
+  }
 });
 
 /**
- * Хабарламаны чат терезесіне қосады
- * @param {string} text - көрсетілетін мәтін
- * @param {string} sender - user немесе bot
+ * Хабарламаны чатқа қосады
+ * @param {string} text
+ * @param {string} sender
  */
 function addMessage(text, sender) {
   const div = document.createElement("div");
@@ -28,15 +34,19 @@ function addMessage(text, sender) {
 }
 
 /**
- * Тестік ЖИ жауабын қайтарады
- * @param {string} message - пайдаланушының сұрағы
+ * Тестік ЖИ жауабы
+ * @param {string} message
  * @returns {string}
  */
 function fakeAIResponse(message) {
   const lowerMessage = message.toLowerCase();
 
-  if (lowerMessage.includes("сәлем") || lowerMessage.includes("салам") || lowerMessage.includes("сәлеметсіз")) {
-    return "Сәлем! Мен тестік ЖИ-чатпын. Сұрағыңызды жазыңыз.";
+  if (
+    lowerMessage.includes("сәлем") ||
+    lowerMessage.includes("салам") ||
+    lowerMessage.includes("сәлеметсіз")
+  ) {
+    return "Сәлем! Мен тестік ЖИ-чатпын. Сұрағыңызды қойыңыз.";
   }
 
   if (lowerMessage.includes("html")) {
@@ -44,7 +54,7 @@ function fakeAIResponse(message) {
   }
 
   if (lowerMessage.includes("css")) {
-    return "CSS — веб-беттің сыртқы көрінісін, түсін, өлшемін және орналасуын баптайды.";
+    return "CSS — веб-беттің сыртқы көрінісін, түсін, өлшемін және орналасуын реттейді.";
   }
 
   if (lowerMessage.includes("javascript") || lowerMessage.includes("js")) {
@@ -56,18 +66,18 @@ function fakeAIResponse(message) {
   }
 
   if (lowerMessage.includes("copilot")) {
-    return "GitHub Copilot — кодты автоматты түрде ұсынатын және толықтыратын ЖИ-көмекші.";
+    return "GitHub Copilot — код жазу кезінде автоматты ұсыныстар беретін ЖИ-көмекші.";
   }
 
   if (lowerMessage.includes("claude")) {
-    return "Claude — мәтін талдауға және құрылымды жауап беруге арналған ЖИ жүйесі.";
+    return "Claude — мәтін талдау мен құрылымды жауап беруге арналған жасанды интеллект жүйесі.";
   }
 
   return `Сіздің сұрағыңыз: "${message}". Бұл тестік ЖИ жауабы.`;
 }
 
 /**
- * Пайдаланушы сұрағын өңдейді
+ * Жіберу батырмасы
  */
 sendBtn.addEventListener("click", () => {
   const message = userInput.value.trim();
@@ -88,7 +98,7 @@ sendBtn.addEventListener("click", () => {
 });
 
 /**
- * Enter пернесімен жіберу
+ * Enter пернесімен хабар жіберу
  */
 userInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
@@ -97,7 +107,7 @@ userInput.addEventListener("keypress", (e) => {
 });
 
 /**
- * Карточкаларды scroll кезінде шығару анимациясы
+ * Карточкаларды scroll кезінде анимациямен шығару
  */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
