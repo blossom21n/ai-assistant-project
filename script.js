@@ -1,3 +1,5 @@
+const API_KEY = "2e6208bbe3febe85b304bfde7aa8846aabda7a2ea98154caa66db16a8452de81";
+
 const themeToggle = document.getElementById("themeToggle");
 const sendBtn = document.getElementById("sendBtn");
 const userInput = document.getElementById("userInput");
@@ -8,7 +10,7 @@ const cards = document.querySelectorAll(".card");
 let requestCount = 0;
 
 /**
- * Қараңғы және ашық режимді ауыстырады
+ * Переключает тёмную и светлую тему
  */
 themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
@@ -21,9 +23,9 @@ themeToggle.addEventListener("click", () => {
 });
 
 /**
- * Хабарламаны чатқа қосады
+ * Добавляет сообщение в чат
  * @param {string} text
- * @param {string} sender
+ * @param {"user"|"bot"} sender
  */
 function addMessage(text, sender) {
   const div = document.createElement("div");
@@ -34,52 +36,47 @@ function addMessage(text, sender) {
 }
 
 /**
- * Тестік ЖИ жауабы
+ * Отправляет запрос в OpenAI API
  * @param {string} message
- * @returns {string}
+ * @returns {Promise<string>}
  */
-function fakeAIResponse(message) {
-  const lowerMessage = message.toLowerCase();
+async function sendMessageToAI(message) {
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${API_KEY}`
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: "Ты полезный ИИ-помощник. Отвечай кратко и понятно, желательно на казахском языке."
+        },
+        {
+          role: "user",
+          content: message
+        }
+      ],
+      temperature: 0.7
+    })
+  });
 
-  if (
-    lowerMessage.includes("сәлем") ||
-    lowerMessage.includes("салам") ||
-    lowerMessage.includes("сәлеметсіз")
-  ) {
-    return "Сәлем! Мен тестік ЖИ-чатпын. Сұрағыңызды қойыңыз.";
+  const data = await response.json();
+
+  if (!response.ok) {
+    console.error("API error:", data);
+    throw new Error(data.error?.message || "Ошибка запроса к API");
   }
 
-  if (lowerMessage.includes("html")) {
-    return "HTML — веб-беттің құрылымын жасауға арналған белгілеу тілі.";
-  }
-
-  if (lowerMessage.includes("css")) {
-    return "CSS — веб-беттің сыртқы көрінісін, түсін, өлшемін және орналасуын реттейді.";
-  }
-
-  if (lowerMessage.includes("javascript") || lowerMessage.includes("js")) {
-    return "JavaScript — веб-бетке интерактивтілік қосатын бағдарламалау тілі.";
-  }
-
-  if (lowerMessage.includes("chatgpt")) {
-    return "ChatGPT — мәтін құрастыруға, сұрақтарға жауап беруге және кодты түсіндіруге көмектесетін ЖИ құралы.";
-  }
-
-  if (lowerMessage.includes("copilot")) {
-    return "GitHub Copilot — код жазу кезінде автоматты ұсыныстар беретін ЖИ-көмекші.";
-  }
-
-  if (lowerMessage.includes("claude")) {
-    return "Claude — мәтін талдау мен құрылымды жауап беруге арналған жасанды интеллект жүйесі.";
-  }
-
-  return `Сіздің сұрағыңыз: "${message}". Бұл тестік ЖИ жауабы.`;
+  return data.choices[0].message.content;
 }
 
 /**
- * Жіберу батырмасы
+ * Обрабатывает отправку сообщения
  */
-sendBtn.addEventListener("click", () => {
+async function handleSendMessage() {
   const message = userInput.value.trim();
 
   if (!message) {
@@ -87,27 +84,42 @@ sendBtn.addEventListener("click", () => {
     return;
   }
 
+  if (!API_KEY || API_KEY === "2e6208bbe3febe85b304bfde7aa8846aabda7a2ea98154caa66db16a8452de81") {
+    alert("API кілтін script.js файлына енгізіңіз.");
+    return;
+  }
+
   addMessage(message, "user");
+  userInput.value = "";
+
   requestCount++;
   counter.textContent = requestCount;
 
-  const reply = fakeAIResponse(message);
-  addMessage(reply, "bot");
+  addMessage("Жауап жазылып жатыр...", "bot");
+  const loadingMessage = chatBox.lastChild;
 
-  userInput.value = "";
-});
+  try {
+    const reply = await sendMessageToAI(message);
+    loadingMessage.textContent = reply;
+  } catch (error) {
+    loadingMessage.textContent = "Қате шықты: " + error.message;
+    console.error(error);
+  }
+}
+
+sendBtn.addEventListener("click", handleSendMessage);
 
 /**
- * Enter пернесімен хабар жіберу
+ * Отправка по Enter
  */
 userInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
-    sendBtn.click();
+    handleSendMessage();
   }
 });
 
 /**
- * Карточкаларды scroll кезінде анимациямен шығару
+ * Анимация карточек при прокрутке
  */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
