@@ -1,233 +1,382 @@
+/* ========================================
+   CSS айнымалылары — тақырып ауысу үшін
+   ======================================== */
 :root {
-  --bg-color: #f3f4f6;
-  --text-color: #111827;
-  --card-bg: #ffffff;
-  --accent: #6366f1;
-  --accent-2: #8b5cf6;
-  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  --border: #e5e7eb;
+    /* Ашық тақырып (әдепкі) */
+    --bg-color: #f5f7fa;
+    --text-color: #1a1a2e;
+    --card-bg: #ffffff;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --card-hover-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    --primary-color: #4361ee;
+    --primary-hover: #3a56d4;
+    --border-color: #e0e0e0;
+    --input-bg: #ffffff;
+    --header-bg: #ffffff;
+    --chat-user-bg: #4361ee;
+    --chat-ai-bg: #e8eaf6;
 }
 
-body.dark {
-  --bg-color: #111827;
-  --text-color: #f9fafb;
-  --card-bg: #1f2937;
-  --accent: #818cf8;
-  --accent-2: #a78bfa;
-  --shadow: 0 10px 25px rgba(255, 255, 255, 0.08);
-  --border: #374151;
+/* Қараңғы тақырып */
+[data-theme="dark"] {
+    --bg-color: #1a1a2e;
+    --text-color: #eaeaea;
+    --card-bg: #16213e;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --card-hover-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    --primary-color: #4cc9f0;
+    --primary-hover: #3db8df;
+    --border-color: #2d3a5a;
+    --input-bg: #0f0f23;
+    --header-bg: #16213e;
+    --chat-user-bg: #4cc9f0;
+    --chat-ai-bg: #2d3a5a;
 }
 
+/* ========================================
+   Негізгі стильдер
+   ======================================== */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: var(--bg-color);
-  color: var(--text-color);
-  line-height: 1.7;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.container {
-  width: min(1200px, 92%);
-  margin: 0 auto;
+/* ========================================
+   Header
+   ======================================== */
+header {
+    background-color: var(--header-bg);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--card-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: background-color 0.3s ease;
 }
 
-.header {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
-  background-size: 200% 200%;
-  animation: gradientMove 6s ease infinite;
-  color: white;
-  padding: 60px 0;
-  text-align: center;
-  border-bottom-left-radius: 28px;
-  border-bottom-right-radius: 28px;
+header h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
 }
 
-.header-content h1 {
-  font-size: 38px;
-  margin-bottom: 10px;
+#theme-toggle {
+    padding: 0.6rem 1.2rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.header-content p {
-  font-size: 17px;
-  opacity: 0.95;
-  margin-bottom: 18px;
+#theme-toggle:hover {
+    background-color: var(--primary-hover);
+    transform: scale(1.05);
 }
 
-.header button {
-  background: white;
-  color: #4f46e5;
-  border: none;
-  padding: 12px 22px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.header button:hover {
-  transform: scale(1.05);
+/* ========================================
+   Main container
+   ======================================== */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
 }
 
 section {
-  margin: 42px 0;
+    margin-bottom: 3rem;
 }
 
-h2 {
-  margin-bottom: 18px;
-  font-size: 22px;
+section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    text-align: center;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-}
-
-.card,
-.experience,
-.chat-section {
-  background: var(--card-bg);
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
+/* ========================================
+   Карточкалар
+   ======================================== */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
 }
 
 .card {
-  transition: 0.3s ease;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Анимация үшін бастапқы күй */
+    opacity: 0;
+    transform: translateY(30px);
 }
 
+/* Карточка пайда болу анимациясы */
+.card.visible {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover эффект */
 .card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.14);
+    transform: translateY(-8px);
+    box-shadow: var(--card-hover-shadow);
 }
 
 .card h3 {
-  margin-bottom: 12px;
-  color: var(--accent);
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    color: var(--primary-color);
 }
 
 .card p {
-  margin-bottom: 12px;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+.card ul {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.card ul li {
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+}
+
+.card ul li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 .card a {
-  display: inline-block;
-  margin-top: 8px;
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: bold;
+    display: inline-block;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 .card a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
-.experience p {
-  margin-bottom: 14px;
+/* ========================================
+   Чат секциясы
+   ======================================== */
+.chat-section {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
 }
 
-.chat-box {
-  min-height: 190px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 15px;
-  margin-bottom: 16px;
-  overflow-y: auto;
-  background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+.request-counter {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.request-counter span {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.chat-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.chat-messages {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--input-bg);
 }
 
 .message {
-  margin-bottom: 12px;
-  padding: 12px 14px;
-  border-radius: 12px;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    margin-bottom: 0.8rem;
+    max-width: 80%;
+    word-wrap: break-word;
 }
 
-.user {
-  background: #dbeafe;
-  color: #111827;
+.user-message {
+    background-color: var(--chat-user-bg);
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
 }
 
-.bot {
-  background: #ede9fe;
-  color: #111827;
+.ai-message {
+    background-color: var(--chat-ai-bg);
+    color: var(--text-color);
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
 }
 
-.chat-controls {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
+.chat-input-container {
+    display: flex;
+    gap: 0.8rem;
 }
 
-.chat-controls input {
-  flex: 1;
-  padding: 13px;
-  border: 1px solid #cbd5e1;
-  border-radius: 12px;
-  font-size: 15px;
+#user-input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    transition: border-color 0.3s ease;
 }
 
-.chat-controls button {
-  padding: 13px 20px;
-  border: none;
-  background: var(--accent);
-  color: white;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
+#user-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
-.chat-controls button:hover {
-  background: var(--accent-2);
+#send-btn {
+    padding: 0.8rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.counter-text {
-  font-weight: 600;
+#send-btn:hover {
+    background-color: var(--primary-hover);
+    transform: scale(1.02);
 }
 
-.hidden {
-  opacity: 0;
-  transform: translateY(35px);
-  transition: all 0.7s ease;
+#send-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
-.show {
-  opacity: 1;
-  transform: translateY(0);
+.api-note {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    opacity: 0.7;
 }
 
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+/* ========================================
+   Менің тәжірибем бөлімі
+   ======================================== */
+.experience-section {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
 }
 
-@media (max-width: 900px) {
-  .cards {
-    grid-template-columns: 1fr;
-  }
+.experience-content h3 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.8rem;
+    color: var(--primary-color);
+}
 
-  .header-content h1 {
-    font-size: 30px;
-  }
+.experience-content h3:first-child {
+    margin-top: 0;
+}
 
-  .chat-controls {
-    flex-direction: column;
-  }
+.experience-content p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
 
-  .chat-controls button {
-    width: 100%;
-  }
+.experience-content code {
+    background-color: var(--chat-ai-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
+/* ========================================
+   Footer
+   ======================================== */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--header-bg);
+    color: var(--text-color);
+    opacity: 0.8;
+    transition: background-color 0.3s ease;
+}
+
+/* ========================================
+   Адаптивті дизайн (мобильді)
+   ======================================== */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+
+    section h2 {
+        font-size: 1.4rem;
+    }
+
+    .chat-input-container {
+        flex-direction: column;
+    }
+
+    #send-btn {
+        width: 100%;
+    }
+}
+
+/* Планшет үшін — 2 баған */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
