@@ -1,77 +1,114 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Әзірлеушіге арналған ЖИ-құралдары</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Әзірлеушіге арналған ЖИ-құралдары</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="header">
-    <div class="container">
-      <h1>Әзірлеушіге арналған ЖИ-құралдары</h1>
-      <p>Жасанды интеллекті веб-әзірлеуде қолдануға арналған шағын таныстырылым</p>
-      <button id="themeToggle">Қараңғы тақырып</button>
-    </div>
-  </header>
+    <header>
+        <h1>Әзірлеушіге арналған ЖИ-құралдары</h1>
+        <button id="theme-toggle">🌙 Қараңғы тақырып</button>
+    </header>
 
-  <main class="container">
-    <section>
-      <h2>ЖИ құралдары</h2>
-      <div class="cards">
-        <div class="card hidden">
-          <h3>ChatGPT</h3>
-          <p>ChatGPT — мәтін жазуға, код түсіндіруге, идея ұсынуға және сұрақтарға жауап беруге көмектесетін ЖИ құралы. Ол оқу мен бағдарламалау кезінде өте пайдалы.</p>
-          <p><strong>Не істей алады:</strong> код жазу, қате табу, мәтін құрастыру, түсіндіру.</p>
-          <a href="https://chatgpt.com" target="_blank">Ресми сайт</a>
-        </div>
+    <main>
+        <!-- ЖИ құралдарының карточкалары -->
+        <section class="cards-section">
+            <h2>Танымал ЖИ-құралдар</h2>
+            <div class="cards-container">
+                
+                <article class="card">
+                    <h3>GitHub Copilot</h3>
+                    <p>GitHub Copilot — кодты жазуға көмектесетін ЖИ-ассистент. Ол сіздің жазып жатқан кодыңызды талдап, автоматты түрде жалғасын ұсынады. Бүкіл функцияларды, тесттерді және құжаттамаларды генерациялай алады.</p>
+                    <ul>
+                        <li>Кодты автотолтыру</li>
+                        <li>Функция генерациясы</li>
+                        <li>Көптеген тілдерді қолдау</li>
+                    </ul>
+                    <a href="[github.com](https://github.com/features/copilot)" target="_blank" rel="noopener">Ресми сайт →</a>
+                </article>
 
-        <div class="card hidden">
-          <h3>GitHub Copilot</h3>
-          <p>GitHub Copilot — код редакторында тікелей ұсыныстар беретін ЖИ көмекші. Ол функция, цикл, шарт және басқа код бөліктерін жылдам жазуға көмектеседі.</p>
-          <p><strong>Не істей алады:</strong> кодты толықтыру, үлгі ұсыну, өнімділікті арттыру.</p>
-          <a href="https://github.com/features/copilot" target="_blank">Ресми сайт</a>
-        </div>
+                <article class="card">
+                    <h3>ChatGPT</h3>
+                    <p>OpenAI компаниясының ChatGPT — әмбебап ЖИ-чат-бот. Код жазуға, қателерді табуға, алгоритмдерді түсіндіруге және техникалық сұрақтарға жауап беруге қабілетті. Әзірлеушілер арасында ең танымал құралдардың бірі.</p>
+                    <ul>
+                        <li>Код генерациясы және түсіндіру</li>
+                        <li>Дебаггинг көмегі</li>
+                        <li>Құжаттама жазу</li>
+                    </ul>
+                    <a href="[chat.openai.com](https://chat.openai.com)" target="_blank" rel="noopener">Ресми сайт →</a>
+                </article>
 
-        <div class="card hidden">
-          <h3>Claude</h3>
-          <p>Claude — мәтін талдауға, ұзақ жауаптар беруге және түсіндірме жасауға ыңғайлы ЖИ жүйесі. Ол мазмұнды құрылымды түрде ұсынуға көмектеседі.</p>
-          <p><strong>Не істей алады:</strong> мәтін өңдеу, жауап беру, талдау жасау, жоспар құру.</p>
-          <a href="https://claude.ai" target="_blank">Ресми сайт</a>
-        </div>
-      </div>
-    </section>
+                <article class="card">
+                    <h3>Claude</h3>
+                    <p>Anthropic компаниясының Claude — қауіпсіздікке бағытталған ЖИ-ассистент. Ұзын құжаттарды талдауда, күрделі тапсырмаларды орындауда және код жазуда өте жақсы нәтиже көрсетеді. Контекстті жақсы есте сақтайды.</p>
+                    <ul>
+                        <li>Үлкен контекст терезесі</li>
+                        <li>Құжаттарды талдау</li>
+                        <li>Қауіпсіз жауаптар</li>
+                    </ul>
+                    <a href="[claude.ai](https://claude.ai)" target="_blank" rel="noopener">Ресми сайт →</a>
+                </article>
 
-    <section class="experience">
-      <h2>Менің тәжірибем</h2>
-      <p>
-        Мен бұл жұмысты орындау барысында ChatGPT құралын қолданып көрдім. Ол маған HTML құрылымын,
-        CSS стилін және JavaScript логикасын түсінуге көмектесті. Кейбір жауаптарда кодтың құрылымы ыңғайлы
-        болды, бірақ кейбір жерлерін өзім түзетіп, ықшамдадым.
-      </p>
-      <p>
-        Маған ең көп көмектескен құрал — ChatGPT, себебі ол кодты түсіндіріп бере алды. Кейде ЖИ кейбір
-        бөліктерді артық немесе жалпы түрде ұсынады, сондықтан мен оны тапсырма талабына сай өзгертіп отырдым.
-        Менің ойымша, 5 жылдан кейін ЖИ әзірлеушілердің жұмысын жеңілдетеді, бірақ адам логикасы мен бақылауы
-        бәрібір өте маңызды болып қалады.
-      </p>
-    </section>
+            </div>
+        </section>
 
-    <section class="chat-section">
-      <h2>Қарапайым ЖИ-чат</h2>
-      <div class="chat-box" id="chatBox">
-        <div class="message bot">Сәлем! Сұрағыңызды жазыңыз.</div>
-      </div>
+        <!-- ЖИ чат секциясы -->
+        <section class="chat-section">
+            <h2>ЖИ-мен сөйлесу</h2>
+            <p class="request-counter">Жіберілген сұраныстар: <span id="counter">0</span></p>
+            
+            <div class="chat-container">
+                <div id="chat-messages" class="chat-messages">
+                    <div class="message ai-message">
+                        Сәлем! Мен сіздің ЖИ-ассистентіңізбін. Қандай сұрағыңыз бар?
+                    </div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <input 
+                        type="text" 
+                        id="user-input" 
+                        placeholder="Сұрағыңызды жазыңыз..."
+                        autocomplete="off"
+                    >
+                    <button id="send-btn">Жіберу</button>
+                </div>
+            </div>
+            
+            <p class="api-note">
+                <strong>Ескерту:</strong> API кілтін script.js файлында өз кілтіңізбен ауыстырыңыз.
+            </p>
+        </section>
 
-      <div class="chat-controls">
-        <input type="text" id="userInput" placeholder="Сұрағыңызды енгізіңіз..." />
-        <button id="sendBtn">Жіберу</button>
-      </div>
+        <!-- Менің тәжірибем бөлімі -->
+        <section class="experience-section">
+            <h2>Менің тәжірибем</h2>
+            
+            <div class="experience-content">
+                <h3>Қолданған құралдарым</h3>
+                <p>
+                    Бұл жобаны жасау барысында мен негізінен <strong>Claude</strong> және <strong>ChatGPT</strong> құралдарын қолдандым. Claude-ты карточкалар мәтінін жазуда пайдаландым — ол әр құралдың мүмкіндіктерін қысқа әрі түсінікті етіп сипаттап берді. ChatGPT-ді CSS flexbox және grid туралы сұрақтар қою үшін қолдандым.
+                </p>
 
-      <p>Жіберілген сұраныстар саны: <span id="counter">0</span></p>
-    </section>
-  </main>
+                <h3>Не жақсы шықты, не түзетуді қажет етті</h3>
+                <p>
+                    ЖИ құралдары мәтін жазуда өте жақсы көмектесті — тез және сапалы контент алдым. Бірақ кейбір кезде код ұсыныстары ескірген немесе қате болды. Мысалы, ChatGPT бірде <code>fetch()</code> функциясында қате синтаксис ұсынды — мен оны MDN құжаттамасынан тексеріп түзеттім. Сондай-ақ, ЖИ кейде тым күрделі шешімдер ұсынады — қарапайым тапсырма үшін қарапайым код жеткілікті екенін түсіндім.
+                </p>
 
-  <script src="script.js"></script>
+                <h3>ЖИ-дің болашағы туралы ойларым</h3>
+                <p>
+                    Менің ойымша, 5 жылдан кейін ЖИ әзірлеуші жұмысын түбегейлі өзгертеді. Бірақ бұл мамандықты жоймайды — керісінше, әзірлеушілер <em>не жасау керек</em> деген сұраққа көбірек көңіл бөледі, ал <em>қалай жасау керек</em> дегенді ЖИ көмекшілері жеңілдетеді. Негізгі дағдылар — архитектура, жүйелік ойлау, пайдаланушы қажеттіліктерін түсіну — одан да маңызды болады. ЖИ-мен жұмыс істей білу өзі жеке дағдыға айналады.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 ЖИ веб-әзірлеу практикасы</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
