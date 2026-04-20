@@ -1,4 +1,4 @@
-const API_KEY = "2e6208bbe3febe85b304bfde7aa8846aabda7a2ea98154caa66db16a8452de81";
+const API_KEY = "";
 
 const themeToggle = document.getElementById("themeToggle");
 const sendBtn = document.getElementById("sendBtn");
@@ -84,7 +84,7 @@ async function handleSendMessage() {
     return;
   }
 
-  if (!API_KEY || API_KEY === "2e6208bbe3febe85b304bfde7aa8846aabda7a2ea98154caa66db16a8452de81") {
+  if (!API_KEY || API_KEY === "") {
     alert("API кілтін script.js файлына енгізіңіз.");
     return;
   }
