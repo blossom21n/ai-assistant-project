@@ -1,11 +1,5 @@
-// ========================================
-// API конфигурациясы
-// ========================================
-const API_KEY = '';
+const API_KEY = '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';
 
-// ========================================
-// DOM элементтері
-// ========================================
 const themeToggle = document.getElementById('theme-toggle');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
@@ -15,10 +9,10 @@ const cards = document.querySelectorAll('.card');
 
 let requestCount = 0;
 
-// ========================================
-// Тақырып ауыстыру функциясы
-// Бұл функция ашық және қараңғы режим арасында ауыстырады
-// ========================================
+/**
+ * Тақырыпты ауыстырады.
+ * Параметр қабылдамайды.
+ */
 function toggleTheme() {
     const isDark = document.body.getAttribute('data-theme') === 'dark';
 
@@ -33,9 +27,10 @@ function toggleTheme() {
     }
 }
 
-// ========================================
-// Сақталған тақырыпты жүктеу
-// ========================================
+/**
+ * Сақталған тақырыпты жүктейді.
+ * Параметр қабылдамайды.
+ */
 function loadSavedTheme() {
     const savedTheme = localStorage.getItem('theme');
 
@@ -45,11 +40,11 @@ function loadSavedTheme() {
     }
 }
 
-// ========================================
-// Чатқа хабарлама қосу
-// @param {string} text - Хабарлама мәтіні
-// @param {string} type - user немесе ai
-// ========================================
+/**
+ * Чатқа хабарлама қосады.
+ * @param {string} text - Көрсетілетін мәтін
+ * @param {string} type - user немесе ai
+ */
 function addMessage(text, type) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'message ' + type + '-message';
@@ -58,32 +53,33 @@ function addMessage(text, type) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// ========================================
-// Сұраныс санауышын жаңарту
-// ========================================
+/**
+ * Сұраныс санауышын жаңартады.
+ * Параметр қабылдамайды.
+ */
 function updateCounter() {
-    requestCount++;
+    requestCount += 1;
     counter.textContent = requestCount;
 }
 
-// ========================================
-// Grok / xAI API-ге сұраныс жіберу
-// @param {string} message - Пайдаланушы хабарламасы
-// @returns {Promise<string>} - ЖИ жауабы
-// ========================================
-async function sendToGrok(message) {
-    const response = await fetch('[api.x.ai](https://api.x.ai/v1/chat/completions)', {
+/**
+ * Groq API-ге сұраныс жібереді.
+ * @param {string} message - Пайдаланушының хабары
+ * @returns {Promise<string>} - ЖИ жауабы
+ */
+async function sendToGroq(message) {
+    const response = await fetch('[api.groq.com](https://api.groq.com/openai/v1/chat/completions)', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + API_KEY
         },
         body: JSON.stringify({
-            model: 'grok-2-latest',
+            model: 'llama-3.1-8b-instant',
             messages: [
                 {
                     role: 'system',
-                    content: 'Сен пайдалы ЖИ-ассистентсің. Пайдаланушыға қазақ тілінде қысқа әрі түсінікті жауап бер.'
+                    content: 'Сен қазақ тілінде жауап беретін пайдалы ЖИ-ассистентсің. Қысқа, нақты және түсінікті жауап бер.'
                 },
                 {
                     role: 'user',
@@ -91,7 +87,7 @@ async function sendToGrok(message) {
                 }
             ],
             temperature: 0.7,
-            max_tokens: 300
+            max_tokens: 400
         })
     });
 
@@ -103,15 +99,16 @@ async function sendToGrok(message) {
     const data = await response.json();
 
     if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-        throw new Error('Жауап форматы дұрыс емес');
+        throw new Error('API жауабы дұрыс форматта емес');
     }
 
     return data.choices[0].message.content;
 }
 
-// ========================================
-// Хабарлама жіберу функциясы
-// ========================================
+/**
+ * Хабарламаны өңдеп, ЖИ-ге жібереді.
+ * Параметр қабылдамайды.
+ */
 async function sendMessage() {
     const message = userInput.value.trim();
 
@@ -119,8 +116,8 @@ async function sendMessage() {
         return;
     }
 
-    if (API_KEY === 'YOUR_XAI_API_KEY_HERE') {
-        addMessage('⚠️ API кілтін script.js файлына енгізіңіз.', 'ai');
+    if (API_KEY === 'YOUR_GROQ_API_KEY_HERE') {
+        addMessage('API кілтін script.js файлына енгізіңіз.', 'ai');
         return;
     }
 
@@ -128,36 +125,35 @@ async function sendMessage() {
     userInput.value = '';
     sendBtn.disabled = true;
     sendBtn.textContent = 'Жүктелуде...';
+    updateCounter();
 
     try {
-        updateCounter();
-        const aiResponse = await sendToGrok(message);
-        addMessage(aiResponse, 'ai');
+        const reply = await sendToGroq(message);
+        addMessage(reply, 'ai');
     } catch (error) {
-        console.error(error);
         addMessage('❌ Қате: ' + error.message, 'ai');
+        console.error(error);
     } finally {
         sendBtn.disabled = false;
         sendBtn.textContent = 'Жіберу';
+        userInput.focus();
     }
 }
 
-// ========================================
-// Карточкалар анимациясы
-// ========================================
+/**
+ * Карточкаларға scroll анимациясын қосады.
+ * Параметр қабылдамайды.
+ */
 function setupCardAnimations() {
     const observer = new IntersectionObserver(function(entries, observerInstance) {
-        entries.forEach(function(entry, index) {
+        entries.forEach(function(entry) {
             if (entry.isIntersecting) {
-                setTimeout(function() {
-                    entry.target.classList.add('visible');
-                }, index * 150);
-
+                entry.target.classList.add('visible');
                 observerInstance.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.1
+        threshold: 0.15
     });
 
     cards.forEach(function(card) {
@@ -165,20 +161,14 @@ function setupCardAnimations() {
     });
 }
 
-// ========================================
-// Оқиғалар
-// ========================================
 themeToggle.addEventListener('click', toggleTheme);
 sendBtn.addEventListener('click', sendMessage);
 
-userInput.addEventListener('keypress', function(event) {
+userInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         sendMessage();
     }
 });
 
-// ========================================
-// Бет жүктелгенде
-// ========================================
 loadSavedTheme();
 setupCardAnimations();
