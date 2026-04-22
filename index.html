@@ -6,20 +6,24 @@
     <title>Әзірлеушіге арналған ЖИ-құралдары</title>
     <style>
         :root {
-            --bg-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --text-color: #2d3748;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --accent: #ff6b6b;
-            --accent-hover: #ff5252;
-            --header-bg: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            --bg-color: linear-gradient(135deg, #ffe6f0 0%, #ffd1e8 100%);
+            --text-color: #4a154b;
+            --card-bg: rgba(255, 240, 245, 0.95);
+            --accent: #ff69b4;
+            --accent-hover: #ff1493;
+            --accent-light: #ffb6d9;
+            --header-bg: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            --shadow-color: rgba(255, 105, 180, 0.3);
         }
         .dark {
-            --bg-color: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            --text-color: #f7fafc;
-            --card-bg: rgba(30, 30, 46, 0.95);
-            --accent: #00d2ff;
-            --accent-hover: #0099cc;
-            --header-bg: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            --bg-color: linear-gradient(135deg, #2d1b2e 0%, #1a0f1c 100%);
+            --text-color: #ffd1e8;
+            --card-bg: rgba(45, 27, 46, 0.95);
+            --accent: #ff85c1;
+            --accent-hover: #ff69b4;
+            --accent-light: #ffb6d9;
+            --header-bg: linear-gradient(135deg, #ff1493 0%, #c71585 100%);
+            --shadow-color: rgba(255, 133, 193, 0.3);
         }
         
         * { 
@@ -42,14 +46,23 @@
         }
         
         body::before {
-            content: '';
+            content: '🌸';
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="20" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="80" r="2.5" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="50" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="40" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
-            background-size: 50px 50px;
+            font-size: 200px;
+            opacity: 0.05;
+            bottom: -50px;
+            right: -50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        body::after {
+            content: '✨';
+            position: fixed;
+            font-size: 150px;
+            opacity: 0.05;
+            top: -30px;
+            left: -30px;
             pointer-events: none;
             z-index: -1;
         }
@@ -61,9 +74,9 @@
             margin-bottom: 40px;
             background: var(--header-bg);
             padding: 25px 35px;
-            border-radius: 20px;
+            border-radius: 50px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px var(--shadow-color);
             animation: slideDown 0.6s ease-out;
         }
         
@@ -80,7 +93,7 @@
         
         h1 { 
             font-size: 2.5rem;
-            background: linear-gradient(135deg, #fff, #ffd89b);
+            background: linear-gradient(135deg, #fff, #ffe6f0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -95,32 +108,44 @@
         }
         
         h2::after {
-            content: '';
+            content: '💖';
             position: absolute;
             bottom: -8px;
             left: 0;
-            width: 60px;
+            width: 100%;
             height: 4px;
-            background: var(--accent);
+            background: linear-gradient(90deg, var(--accent), transparent);
             border-radius: 2px;
         }
         
         .cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
         
         .card {
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 30px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 30px var(--shadow-color);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             opacity: 0;
             transform: translateY(50px);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '🌸';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 80px;
+            opacity: 0.1;
+            pointer-events: none;
         }
         
         .card.visible {
@@ -130,7 +155,7 @@
         
         .card:hover {
             transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 20px 40px var(--shadow-color);
             border-color: var(--accent);
         }
         
@@ -138,6 +163,9 @@
             font-size: 1.8rem;
             margin-bottom: 15px;
             color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .card p {
@@ -147,32 +175,33 @@
         
         .card-link {
             display: inline-block;
-            padding: 10px 20px;
-            background: var(--accent);
+            padding: 10px 25px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             color: white;
             text-decoration: none;
-            border-radius: 25px;
+            border-radius: 50px;
             transition: all 0.3s ease;
             font-weight: 600;
         }
         
         .card-link:hover {
-            background: var(--accent-hover);
             transform: translateX(5px);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
         
         .chat-window {
             height: 420px;
             overflow-y: auto;
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 30px;
             padding: 20px;
             margin-bottom: 20px;
             display: flex;
             flex-direction: column;
             gap: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 30px var(--shadow-color);
             backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 105, 180, 0.3);
         }
         
         .chat-window::-webkit-scrollbar {
@@ -180,7 +209,7 @@
         }
         
         .chat-window::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(255, 105, 180, 0.1);
             border-radius: 10px;
         }
         
@@ -191,8 +220,8 @@
         
         .message {
             max-width: 75%;
-            padding: 12px 18px;
-            border-radius: 20px;
+            padding: 12px 20px;
+            border-radius: 25px;
             line-height: 1.4;
             animation: fadeIn 0.3s ease-out;
             word-wrap: break-word;
@@ -218,14 +247,10 @@
         
         .message.ai {
             align-self: flex-start;
-            background: rgba(100, 100, 100, 0.2);
+            background: rgba(255, 105, 180, 0.15);
             backdrop-filter: blur(5px);
             border-bottom-left-radius: 5px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .dark .message.ai {
-            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(255, 105, 180, 0.3);
         }
         
         #chat-form {
@@ -235,9 +260,9 @@
         
         #user-input {
             flex: 1;
-            padding: 15px 20px;
+            padding: 15px 25px;
             border: 2px solid var(--accent);
-            border-radius: 40px;
+            border-radius: 50px;
             font-size: 1rem;
             background: var(--card-bg);
             color: var(--text-color);
@@ -246,7 +271,7 @@
         
         #user-input:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.3);
             transform: scale(1.02);
         }
         
@@ -255,18 +280,17 @@
             background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             color: white;
             border: none;
-            border-radius: 40px;
+            border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
             font-size: 1rem;
             transition: all 0.3s ease;
-            text-transform: uppercase;
             letter-spacing: 1px;
         }
         
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
         
         button:active {
@@ -283,11 +307,12 @@
         
         #experience {
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 30px;
             padding: 30px;
             margin: 40px 0;
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 2px solid rgba(255, 105, 180, 0.3);
         }
         
         #experience p {
@@ -315,6 +340,15 @@
             50% { opacity: 0.5; }
         }
         
+        .category-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(255, 105, 180, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        
         @media (max-width: 768px) {
             .cards-container { 
                 grid-template-columns: 1fr; 
@@ -324,6 +358,7 @@
                 flex-direction: column;
                 gap: 20px;
                 text-align: center;
+                border-radius: 30px;
             }
             
             h1 {
@@ -360,39 +395,95 @@
 </head>
 <body>
     <header>
-        <h1>🤖 Әзірлеушіге арналған ЖИ-құралдары</h1>
+        <h1>🎀 Әзірлеушіге арналған ЖИ-құралдары 💕</h1>
         <button id="dark-mode-btn">🌙 Қараңғы тақырып</button>
     </header>
 
     <main>
         <section id="tools">
-            <h2>🚀 ЖИ-құралдары</h2>
+            <h2>🤖 Жасанды интеллект түрлері</h2>
             <div class="cards-container">
+                <!-- Chat/Көмекші ЖИ -->
                 <div class="card">
-                    <h3>✨ Gamma</h3>
-                    <p>AI-мен презентация, веб-сайт және құжаттарды бірнеше секундта жасайтын құрал.</p>
-                    <a href="https://gamma.app" target="_blank" class="card-link">Ресми сайт →</a>
+                    <h3>💬 Chat/Көмекші ЖИ</h3>
+                    <p><strong>DeepSeek, Grok, ChatGPT, Claude, Gemini</strong><br>
+                    Мәтін генерациялау, сұрақтарға жауап беру, код жазу, кеңес беру. Ең танымал ЖИ түрі.</p>
+                    <a href="https://chat.deepseek.com" target="_blank" class="card-link">DeepSeek →</a>
+                    <div class="category-badge">📝 Мәтінмен жұмыс</div>
                 </div>
+
+                <!-- Код жазуға арналған ЖИ -->
                 <div class="card">
-                    <h3>🧠 DeepSeek</h3>
-                    <p>Күшті тегін ЖИ. Код жазуға, мәтін генерациялауға және күрделі сұрақтарға өте жақсы.</p>
-                    <a href="https://chat.deepseek.com" target="_blank" class="card-link">Ресми сайт →</a>
+                    <h3>💻 Код жазуға арналған ЖИ</h3>
+                    <p><strong>GitHub Copilot, Codeium, Cursor, Amazon CodeWhisperer</strong><br>
+                    Кодты автоматты түрде жазып, қателерді түзетеді, тесттер жасайды. Әзірлеушінің ең жақсы көмекшісі.</p>
+                    <a href="https://github.com/features/copilot" target="_blank" class="card-link">GitHub Copilot →</a>
+                    <div class="category-badge">⚡ Программалау</div>
                 </div>
+
+                <!-- Сурет/Дизайн ЖИ -->
                 <div class="card">
-                    <h3>🎯 Grok</h3>
-                    <p>xAI компаниясының ЖИ-і. Шындыққа жақын, юморлы және пайдалы жауаптар береді.</p>
-                    <a href="https://grok.com" target="_blank" class="card-link">Ресми сайт →</a>
+                    <h3>🎨 Сурет/Дизайн ЖИ</h3>
+                    <p><strong>Midjourney, DALL-E 3, Stable Diffusion, Leonardo.ai</strong><br>
+                    Мәтін бойынша сурет, логотип, иллюстрация, дизайн жасайды. Креативті жобаларға өте қолайлы.</p>
+                    <a href="https://www.midjourney.com" target="_blank" class="card-link">Midjourney →</a>
+                    <div class="category-badge">🖼️ Кескін генерация</div>
+                </div>
+
+                <!-- Презентация/Құжат ЖИ -->
+                <div class="card">
+                    <h3>📊 Презентация/Құжат ЖИ</h3>
+                    <p><strong>Gamma, Tome, Beautiful.ai, Pitch</strong><br>
+                    Бірнеше секундта кәсіби презентация, құжат, веб-сайт жасайды. Бизнес және оқу үшін тамаша.</p>
+                    <a href="https://gamma.app" target="_blank" class="card-link">Gamma →</a>
+                    <div class="category-badge">📽️ Презентация</div>
+                </div>
+
+                <!-- Видео/Аудио ЖИ -->
+                <div class="card">
+                    <h3>🎬 Видео/Аудио ЖИ</h3>
+                    <p><strong>Synthesia, Runway, HeyGen, ElevenLabs</strong><br>
+                    Видео жасау, дауыс синтезі, музыка генерациялау, аудио өңдеу. Мультимедиа мамандарына арналған.</p>
+                    <a href="https://www.synthesia.io" target="_blank" class="card-link">Synthesia →</a>
+                    <div class="category-badge">🎥 Мультимедиа</div>
+                </div>
+
+                <!-- Деректер/Аналитика ЖИ -->
+                <div class="card">
+                    <h3>📈 Деректер/Аналитика ЖИ</h3>
+                    <p><strong>Tableau AI, DataRobot, Polymer, Akkio</strong><br>
+                    Деректерді талдау, болжам жасау, дашбордтар құру. Бизнес аналитика үшін қуатты құрал.</p>
+                    <a href="https://www.datarobot.com" target="_blank" class="card-link">DataRobot →</a>
+                    <div class="category-badge">📊 Аналитика</div>
+                </div>
+
+                <!-- Аударма/Тілдік ЖИ -->
+                <div class="card">
+                    <h3>🌍 Аударма/Тілдік ЖИ</h3>
+                    <p><strong>Google Translate AI, DeepL, Lingvanex</strong><br>
+                    100+ тілде дәл аударма, сөйлеуді тану, мәтінді оқу. Шет тілдерімен жұмыс істейтіндерге арналған.</p>
+                    <a href="https://www.deepl.com" target="_blank" class="card-link">DeepL →</a>
+                    <div class="category-badge">🔤 Аударма</div>
+                </div>
+
+                <!-- Ассистент/Автоматтандыру ЖИ -->
+                <div class="card">
+                    <h3>🤖 Ассистент/Автоматтандыру ЖИ</h3>
+                    <p><strong>Zapier AI, Make.com AI, IFTTT AI</strong><br>
+                    Жұмысты автоматтандырады, күнделікті тапсырмаларды жеңілдетеді, уақытты үнемдейді.</p>
+                    <a href="https://zapier.com" target="_blank" class="card-link">Zapier →</a>
+                    <div class="category-badge">⚙️ Автоматтандыру</div>
                 </div>
             </div>
         </section>
 
         <section id="experience">
-            <h2>📝 Менің тәжірибем</h2>
-            <p>Мен Gamma, DeepSeek және Grok құралдарын қолдандым. Gamma презентация жасауға, DeepSeek код және мәтін жазуға, Grok қызықты әрі шынайы жауаптарға өте қолайлы болды.</p>
+            <h2>📝 Менің тәжірибем 💭</h2>
+            <p>Мен Gamma, DeepSeek және Grok құралдарын қолдандым. Gamma презентация жасауға, DeepSeek код және мәтін жазуға, Grok қызықты әрі шынайы жауаптарға өте қолайлы болды. Қазір GitHub Copilot-ты да сынап жатырмын - код жазу өте жылдамдады!</p>
             <h3>🤔 Рефлексия</h3>
-            <p><strong>❓ Қандай құрал ең көп көмектесті?</strong> DeepSeek<br>
-               <strong>⚠️ ЖИ нені дұрыс немесе ыңғайсыз жасады?</strong> Кейде қате параметрлер берді, мен DevTools-та тексеріп түзеттім.<br>
-               <strong>🔮 ЖИ 5 жылдан кейін әзірлеуші мамандығын қалай өзгертеді?</strong> Рутиналық код жазуды, тестілеуді және құжаттаманы толығымен өз қолына алады.</p>
+            <p><strong>❓ Қандай құрал ең көп көмектесті?</strong> DeepSeek және GitHub Copilot<br>
+               <strong>⚠️ ЖИ нені дұрыс немесе ыңғайсыз жасады?</strong> Кейде қате параметрлер берді, мен DevTools-та тексеріп түзеттім. Бірақ жалпы алғанда өте пайдалы.<br>
+               <strong>🔮 ЖИ 5 жылдан кейін әзірлеуші мамандығын қалай өзгертеді?</strong> Рутиналық код жазуды, тестілеуді және құжаттаманы толығымен өз қолына алады. Әзірлеушілер архитектураға, инновацияға және креативті тапсырмаларға көбірек көңіл бөледі.</p>
         </section>
 
         <section id="chat">
@@ -462,7 +553,7 @@
             msg.className = `message ${type}`;
 
             if (isLoading) {
-                msg.innerHTML = `<span class="loading">🤔 ЖИ ойлануда...</span>`;
+                msg.innerHTML = `<span class="loading">💖 ЖИ ойлануда...</span>`;
             } else {
                 msg.textContent = text;
             }
