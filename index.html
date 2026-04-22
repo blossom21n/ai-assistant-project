@@ -4,124 +4,271 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Әзірлеушіге арналған ЖИ-құралдары</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --accent: #00c853;
+        }
+        .dark {
+            --bg-color: #1e1e1e;
+            --text-color: #e0e0e0;
+            --card-bg: #2d2d2d;
+            --accent: #00e676;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 15px;
+        }
+        h1 { font-size: 2.4rem; }
+        h2 { margin: 40px 0 20px; color: var(--accent); }
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 200, 83, 0.3);
+        }
+        .chat-window {
+            height: 420px;
+            overflow-y: auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .message {
+            max-width: 75%;
+            padding: 14px 18px;
+            border-radius: 18px;
+            line-height: 1.4;
+        }
+        .message.user {
+            align-self: flex-end;
+            background: var(--accent);
+            color: white;
+        }
+        .message.ai {
+            align-self: flex-start;
+            background: #e9ecef;
+            color: #212529;
+        }
+        .dark .message.ai {
+            background: #444;
+            color: #e0e0e0;
+        }
+        #chat-form {
+            display: flex;
+            gap: 10px;
+        }
+        #user-input {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid var(--accent);
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+        button {
+            padding: 14px 28px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .counter {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        @media (max-width: 768px) {
+            .cards-container { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container header-inner">
-            <h1>Әзірлеушіге арналған ЖИ-құралдары</h1>
-            <button id="theme-toggle" class="theme-btn">🌙 Қараңғы тақырып</button>
-        </div>
+    <header>
+        <h1>Әзірлеушіге арналған ЖИ-құралдары</h1>
+        <button id="dark-mode-btn">Қараңғы тақырып</button>
     </header>
-    <main class="container">
-        <section class="hero">
-            <h2>Жасанды интеллекті веб-әзірлеуде қолдану</h2>
-            <p>
-                Бұл бетте әзірлеушілерге пайдалы ЖИ-құралдары, қарапайым ЖИ-чаты және менің тәжірибем көрсетілген.
-            </p>
-        </section>
-        <section class="cards-section">
-            <h2>Танымал ЖИ-құралдар</h2>
+
+    <main>
+        <section id="tools">
+            <h2>ЖИ-құралдары</h2>
             <div class="cards-container">
-                <article class="card">
-                    <h3>GitHub Copilot</h3>
-                    <p>
-                        GitHub Copilot — код жазуды жылдамдататын ЖИ-көмекші. Ол функциялар,
-                        шарттар, циклдер және түсіндірме комментарийлер ұсына алады.
-                    </p>
-                    <p>
-                        Бұл құрал әзірлеушіге шаблон код жазуда, қателерді азайтуда және
-                        өнімділікті арттыруда көмектеседі.
-                    </p>
-                    <ul>
-                        <li>Кодты автотолтыру</li>
-                        <li>Функция құруға көмек</li>
-                        <li>Түсіндірме бойынша код ұсыну</li>
-                    </ul>
-                    <a href="[github.com](https://github.com/features/copilot)" target="_blank" rel="noopener noreferrer">Ресми сайт</a>
-                </article>
-                <article class="card">
-                    <h3>ChatGPT</h3>
-                    <p>
-                        ChatGPT — мәтін жазуға, код түсіндіруге және сұрақтарға жауап беруге арналған
-                        әмбебап ЖИ-ассистент. Ол веб-әзірлеуде тез көмек бере алады.
-                    </p>
-                    <p>
-                        Әзірлеушілер ChatGPT-ді идея генерациясы, кодты талдау және күрделі
-                        тақырыптарды түсіндіру үшін жиі қолданады.
-                    </p>
-                    <ul>
-                        <li>Код түсіндіру</li>
-                        <li>Қате табуға көмек</li>
-                        <li>Мәтін және құжаттама жазу</li>
-                    </ul>
-                    <a href="[chat.openai.com](https://chat.openai.com/)" target="_blank" rel="noopener noreferrer">Ресми сайт</a>
-                </article>
-                <article class="card">
-                    <h3>Claude</h3>
-                    <p>
-                        Claude — үлкен мәтіндермен жұмыс істеуге және нақты жауап беруге арналған
-                        ЖИ-құрал. Ол логикалық түсіндіру мен құжат талдауда ыңғайлы.
-                    </p>
-                    <p>
-                        Бұл құрал код құрылымын талдауда, мәтін өңдеуде және тапсырмаларды
-                        түсінікті қылып орындауда пайдалы.
-                    </p>
-                    <ul>
-                        <li>Ұзын мәтіндерді талдау</li>
-                        <li>Түсінікті жауап беру</li>
-                        <li>Құжатпен жұмыс істеу</li>
-                    </ul>
-                    <a href="[claude.ai](https://claude.ai/)" target="_blank" rel="noopener noreferrer">Ресми сайт</a>
-                </article>
-            </div>
-        </section>
-        <section class="chat-section">
-            <h2>ЖИ-мен сөйлесу</h2>
-            <p class="request-counter">Жіберілген сұраныстар: <span id="counter">0</span></p>
-            <div class="chat-box">
-                <div id="chat-messages" class="chat-messages">
-                    <div class="message ai-message">Сәлем! Мен ЖИ-ассистентпін. Сұрағыңызды жазыңыз.</div>
+                <div class="card">
+                    <h3>Gamma</h3>
+                    <p>AI-мен презентация, веб-сайт және құжаттарды бірнеше секундта жасайтын құрал.</p>
+                    <a href="https://gamma.app" target="_blank" class="card-link">Ресми сайт →</a>
                 </div>
-                <div class="chat-input-row">
-                    <input
-                        id="user-input"
-                        type="text"
-                        placeholder="Сұрағыңызды жазыңыз..."
-                        autocomplete="off"
-                    >
-                    <button id="send-btn">Жіберу</button>
+                <div class="card">
+                    <h3>DeepSeek</h3>
+                    <p>Күшті тегін ЖИ. Код жазуға, мәтін генерациялауға және күрделі сұрақтарға өте жақсы.</p>
+                    <a href="https://chat.deepseek.com" target="_blank" class="card-link">Ресми сайт →</a>
+                </div>
+                <div class="card">
+                    <h3>Grok</h3>
+                    <p>xAI компаниясының ЖИ-і. Шындыққа жақын, юморлы және пайдалы жауаптар береді.</p>
+                    <a href="https://grok.com" target="_blank" class="card-link">Ресми сайт →</a>
                 </div>
             </div>
         </section>
-        <section class="experience-section">
+
+        <section id="experience">
             <h2>Менің тәжірибем</h2>
-            <h3>Қандай құрал ең көп көмектесті</h3>
-            <p>
-                Бұл жұмысты орындауда маған ең көп көмектескен құрал — ChatGPT. Ол HTML құрылымын,
-                CSS безендіру логикасын және JavaScript бөлігін түсінуге көмектесті. Әсіресе,
-                кодтың не үшін жазылғанын түсіндіруде пайдалы болды.
-            </p>
-            <h3>ЖИ нені дұрыс немесе ыңғайсыз жасады</h3>
-            <p>
-                ЖИ мәтін жазуда және бастапқы код үлгісін ұсынуда өте ыңғайлы болды. Бірақ кей кезде
-                ол артық немесе қажет емес код қосып жіберді. Мен оны өзім тексеріп, артық бөліктерін
-                қысқартып, қарапайым әрі түсінікті қылып түзеттім.
-            </p>
-            <h3>ЖИ 5 жылдан кейін әзірлеуші мамандығын қалай өзгертеді</h3>
-            <p>
-                Менің ойымша, 5 жылдан кейін ЖИ әзірлеушілердің күнделікті жұмысын қатты жеңілдетеді.
-                Қарапайым кодты автоматты түрде жазып, қателерді тез табуға көмектеседі. Бірақ толық
-                адамды алмастырмайды, себебі логика, идея, архитектура және шешім қабылдау бәрібір
-                адамға байланысты болады.
-            </p>
+            <p>Мен Gamma, DeepSeek және Grok құралдарын қолдандым. Gamma презентация жасауға, DeepSeek код және мәтін жазуға, Grok қызықты әрі шынайы жауаптарға өте қолайлы болды.</p>
+            <h3>Рефлексия</h3>
+            <p><strong>Қандай құрал ең көп көмектесті?</strong> DeepSeek<br>
+               <strong>ЖИ нені дұрыс немесе ыңғайсыз жасады?</strong> Кейде қате параметрлер берді, мен DevTools-та тексеріп түзеттім.<br>
+               <strong>ЖИ 5 жылдан кейін әзірлеуші мамандығын қалай өзгертеді?</strong> Рутиналық код жазуды, тестілеуді және құжаттаманы толығымен өз қолына алады.</p>
+        </section>
+
+        <section id="chat">
+            <h2>ЖИ-чат (Groq — тегін)</h2>
+            <div id="chat-window" class="chat-window"></div>
+            <form id="chat-form">
+                <input type="text" id="user-input" placeholder="Сұрағыңызды жазыңыз..." required>
+                <button type="submit">Жіберу</button>
+            </form>
+            <p class="counter">Сұраныстар саны: <span id="request-counter">0</span></p>
         </section>
     </main>
-    <footer class="footer">
-        <div class="container">
-            <p>© 2026 ЖИ веб-әзірлеу практикасы</p>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+
+    <script>
+        const GROQ_API_KEY = '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';
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            const btn = document.getElementById('dark-mode-btn');
+            btn.textContent = document.body.classList.contains('dark') ? 'Ашық тақырып' : 'Қараңғы тақырып';
+        }
+
+        function setupScrollAnimations() {
+            const cards = document.querySelectorAll('.card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.2 });
+            cards.forEach(card => observer.observe(card));
+        }
+
+        async function sendToAI(message) {
+            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${GROQ_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: "llama-3.1-8b-instant",
+                    messages: [
+                        { 
+                            role: "system", 
+                            content: "You are a helpful AI assistant. Detect the language of the user's message and ALWAYS respond in exactly the same language as the user wrote. If the user writes in Kazakh, reply in Kazakh. If in Russian, reply in Russian. If in English, reply in English. Never mix languages." 
+                        },
+                        { role: "user", content: message }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 1024
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Groq API Error:", response.status, errorText);
+                throw new Error(`API қатесі (${response.status})`);
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content;
+        }
+
+        function addMessage(type, text, isLoading = false) {
+            const chatWindow = document.getElementById('chat-window');
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+
+            if (isLoading) {
+                msg.innerHTML = `<span class="loading">ЖИ ойлануда...</span>`;
+            } else {
+                msg.textContent = text;
+            }
+            chatWindow.appendChild(msg);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+            return msg;
+        }
+
+        let requestCount = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('dark-mode-btn').addEventListener('click', toggleDarkMode);
+            setupScrollAnimations();
+
+            const form = document.getElementById('chat-form');
+            const input = document.getElementById('user-input');
+            const counterEl = document.getElementById('request-counter');
+            const chatWindow = document.getElementById('chat-window');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const userText = input.value.trim();
+                if (!userText) return;
+
+                addMessage('user', userText);
+                input.value = '';
+
+                requestCount++;
+                counterEl.textContent = requestCount;
+
+                const loadingMsg = addMessage('ai', '', true);
+
+                try {
+                    const aiAnswer = await sendToAI(userText);
+                    loadingMsg.remove();
+                    addMessage('ai', aiAnswer);
+                } catch (err) {
+                    loadingMsg.remove();
+                    addMessage('ai', 'Қате: ' + err.message);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
