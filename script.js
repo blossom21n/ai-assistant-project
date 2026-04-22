@@ -1,7 +1,7 @@
 // ========================================
 // API конфигурациясы
 // ========================================
-const API_KEY = 'xai-b9M5cl3ouywhBewaAixqVZYs5Lct0O4Zrrv77vOyoNUOwN6zEbaZJn9JsrNK2mFLKGdQsg7fft9V91Gp';
+const API_KEY = '';
 
 // ========================================
 // DOM элементтері
