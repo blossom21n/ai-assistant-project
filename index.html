@@ -6,21 +6,21 @@
     <title>Әзірлеушіге арналған ЖИ-құралдары</title>
     <style>
         :root {
-            --bg-color: #f8f9fa;
-            --text-color: #212529;
+            --bg-color: #fdf2f8;
+            --text-color: #1e293b;
             --card-bg: #ffffff;
-            --accent: #00c853;
+            --accent: #ec4899;
         }
         .dark {
-            --bg-color: #1e1e1e;
-            --text-color: #e0e0e0;
-            --card-bg: #2d2d2d;
-            --accent: #00e676;
+            --bg-color: #0f172a;
+            --text-color: #f1f5f9;
+            --card-bg: #1e293b;
+            --accent: #f472b6;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg-color);
+            background: linear-gradient(135deg, var(--bg-color) 0%, #fce7f3 100%);
             color: var(--text-color);
             line-height: 1.6;
             padding: 20px;
@@ -32,11 +32,14 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 40px;
-            border-bottom: 2px solid var(--accent);
+            border-bottom: 3px solid var(--accent);
             padding-bottom: 15px;
+            background: rgba(236, 72, 153, 0.1);
+            border-radius: 16px;
+            padding: 20px;
         }
         h1 { font-size: 2.4rem; }
-        h2 { margin: 40px 0 20px; color: var(--accent); }
+        h2 { margin: 40px 0 20px; color: var(--accent); text-shadow: 0 2px 4px rgba(236, 72, 153, 0.3); }
         .cards-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -44,81 +47,115 @@
         }
         .card {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(236, 72, 153, 0.15);
             transition: all 0.4s ease;
             opacity: 0;
             transform: translateY(50px);
+            border: 1px solid rgba(236, 72, 153, 0.2);
         }
         .card.visible {
             opacity: 1;
             transform: translateY(0);
         }
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 25px rgba(0, 200, 83, 0.3);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.4);
+            border-color: var(--accent);
+        }
+        .card-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, var(--accent), #f472b6);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .card-link:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.4);
         }
         .chat-window {
             height: 420px;
             overflow-y: auto;
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 25px;
             margin-bottom: 15px;
             display: flex;
             flex-direction: column;
             gap: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(236, 72, 153, 0.15);
+            border: 1px solid rgba(236, 72, 153, 0.2);
         }
         .message {
             max-width: 75%;
-            padding: 14px 18px;
-            border-radius: 18px;
-            line-height: 1.4;
+            padding: 16px 20px;
+            border-radius: 22px;
+            line-height: 1.5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .message.user {
             align-self: flex-end;
-            background: var(--accent);
+            background: linear-gradient(45deg, var(--accent), #f472b6);
             color: white;
         }
         .message.ai {
             align-self: flex-start;
-            background: #e9ecef;
-            color: #212529;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            color: #1e293b;
         }
         .dark .message.ai {
-            background: #444;
-            color: #e0e0e0;
+            background: linear-gradient(135deg, #334155, #475569);
+            color: #f1f5f9;
         }
         #chat-form {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
         #user-input {
             flex: 1;
-            padding: 14px;
+            padding: 16px 20px;
             border: 2px solid var(--accent);
-            border-radius: 30px;
+            border-radius: 35px;
             font-size: 1rem;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+        }
+        #user-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.3);
+            transform: scale(1.02);
         }
         button {
-            padding: 14px 28px;
-            background: var(--accent);
+            padding: 16px 32px;
+            background: linear-gradient(45deg, var(--accent), #f472b6);
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 35px;
             cursor: pointer;
             font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.6);
         }
         .counter {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 12px;
             font-weight: bold;
             color: var(--accent);
+            text-shadow: 0 1px 2px rgba(236, 72, 153, 0.3);
         }
         @media (max-width: 768px) {
             .cards-container { grid-template-columns: 1fr; }
+            body { padding: 15px; }
         }
     </style>
 </head>
@@ -133,30 +170,30 @@
             <h2>ЖИ-құралдары</h2>
             <div class="cards-container">
                 <div class="card">
-                    <h3>Gamma</h3>
-                    <p>AI-мен презентация, веб-сайт және құжаттарды бірнеше секундта жасайтын құрал.</p>
-                    <a href="https://gamma.app" target="_blank" class="card-link">Ресми сайт →</a>
+                    <h3>Cloudflare Workers AI</h3>
+                    <p>Cloudflare-дің тегін ЖИ платформасы. Кодқа, веб-әзірлеуге және API-лерге өте қолайлы.</p>
+                    <a href="[developers.cloudflare.com](https://developers.cloudflare.com/workers-ai/)" target="_blank" class="card-link">Ресми сайт →</a>
                 </div>
                 <div class="card">
                     <h3>DeepSeek</h3>
                     <p>Күшті тегін ЖИ. Код жазуға, мәтін генерациялауға және күрделі сұрақтарға өте жақсы.</p>
-                    <a href="https://chat.deepseek.com" target="_blank" class="card-link">Ресми сайт →</a>
+                    <a href="[chat.deepseek.com](https://chat.deepseek.com)" target="_blank" class="card-link">Ресми сайт →</a>
                 </div>
                 <div class="card">
                     <h3>Grok</h3>
                     <p>xAI компаниясының ЖИ-і. Шындыққа жақын, юморлы және пайдалы жауаптар береді.</p>
-                    <a href="https://grok.com" target="_blank" class="card-link">Ресми сайт →</a>
+                    <a href="[grok.com](https://grok.com)" target="_blank" class="card-link">Ресми сайт →</a>
                 </div>
             </div>
         </section>
 
         <section id="experience">
             <h2>Менің тәжірибем</h2>
-            <p>Мен Gamma, DeepSeek және Grok құралдарын қолдандым. Gamma презентация жасауға, DeepSeek код және мәтін жазуға, Grok қызықты әрі шынайы жауаптарға өте қолайлы болды.</p>
+            <p>Мен Cloudflare Workers AI, DeepSeek және Grok құралдарын сынап көрдім. Cloudflare код пен веб-әзірлеуге, DeepSeek күрделі тапсырмаларға, Grok қызықты әрі шынайы жауаптарға тамаша келеді.</p>
             <h3>Рефлексия</h3>
-            <p><strong>Қандай құрал ең көп көмектесті?</strong> DeepSeek<br>
-               <strong>ЖИ нені дұрыс немесе ыңғайсыз жасады?</strong> Кейде қате параметрлер берді, мен DevTools-та тексеріп түзеттім.<br>
-               <strong>ЖИ 5 жылдан кейін әзірлеуші мамандығын қалай өзгертеді?</strong> Рутиналық код жазуды, тестілеуді және құжаттаманы толығымен өз қолына алады.</p>
+            <p><strong>Қандай құрал ең тиімді болды?</strong> Cloudflare Workers AI<br>
+               <strong>ЖИ қай жерде қателесті?</strong> Кейде параметрлерді дұрыс түсінбеді, DevTools арқылы түзеттім.<br>
+               <strong>ЖИ әзірлеуші жұмысын 5 жылдан кейін қалай өзгертеді?</strong> Рутиналық кодтау, тестілеу және құжаттама жұмыстарын толық автоматтандырады.</p>
         </section>
 
         <section id="chat">
@@ -190,7 +227,7 @@
         }
 
         async function sendToAI(message) {
-            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            const response = await fetch("[api.groq.com](https://api.groq.com/openai/v1/chat/completions)", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
