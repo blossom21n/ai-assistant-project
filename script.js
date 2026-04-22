@@ -1,4 +1,4 @@
-const API_KEY = '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';
+const API_KEY = '';
 
 const themeToggle = document.getElementById('theme-toggle');
 const userInput = document.getElementById('user-input');
