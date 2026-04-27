@@ -189,120 +189,13 @@
             box-shadow: 0 5px 15px var(--shadow-color);
         }
         
-        .chat-window {
-            height: 420px;
-            overflow-y: auto;
-            background: var(--card-bg);
-            border-radius: 30px;
-            padding: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            box-shadow: 0 10px 30px var(--shadow-color);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 105, 180, 0.3);
-        }
-        
-        .chat-window::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .chat-window::-webkit-scrollbar-track {
-            background: rgba(255, 105, 180, 0.1);
-            border-radius: 10px;
-        }
-        
-        .chat-window::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 10px;
-        }
-        
-        .message {
-            max-width: 75%;
-            padding: 12px 20px;
-            border-radius: 25px;
-            line-height: 1.4;
-            animation: fadeIn 0.3s ease-out;
-            word-wrap: break-word;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .message.user {
-            align-self: flex-end;
-            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            color: white;
-            border-bottom-right-radius: 5px;
-        }
-        
-        .message.ai {
-            align-self: flex-start;
-            background: rgba(255, 105, 180, 0.15);
-            backdrop-filter: blur(5px);
-            border-bottom-left-radius: 5px;
-            border: 1px solid rgba(255, 105, 180, 0.3);
-        }
-        
-        #chat-form {
-            display: flex;
-            gap: 15px;
-        }
-        
-        #user-input {
-            flex: 1;
-            padding: 15px 25px;
-            border: 2px solid var(--accent);
-            border-radius: 50px;
-            font-size: 1rem;
-            background: var(--card-bg);
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-        
-        #user-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.3);
-            transform: scale(1.02);
-        }
-        
-        button {
-            padding: 15px 35px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--shadow-color);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        .counter {
-            text-align: center;
-            margin-top: 15px;
-            font-weight: bold;
-            color: var(--accent);
-            font-size: 1.1rem;
+        .category-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(255, 105, 180, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 10px;
         }
         
         #experience {
@@ -340,15 +233,6 @@
             50% { opacity: 0.5; }
         }
         
-        .category-badge {
-            display: inline-block;
-            padding: 5px 12px;
-            background: rgba(255, 105, 180, 0.2);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-top: 10px;
-        }
-        
         @media (max-width: 768px) {
             .cards-container { 
                 grid-template-columns: 1fr; 
@@ -368,14 +252,6 @@
             h2 {
                 font-size: 1.5rem;
             }
-            
-            .message {
-                max-width: 85%;
-            }
-            
-            button {
-                padding: 12px 20px;
-            }
         }
         
         @media (max-width: 480px) {
@@ -385,10 +261,6 @@
             
             .card {
                 padding: 20px;
-            }
-            
-            #chat-form {
-                flex-direction: column;
             }
         }
     </style>
@@ -482,7 +354,7 @@
             <h2>💬 ЖИ-чат (Groq — тегін)</h2>
             <div id="chat-window" class="chat-window"></div>
             <form id="chat-form">
-                <input type="text" id="user-input" placeholder="Сұрағыңызды жазыңыз... (Қазақша, Орысша, English)" required>
+                <input type="text" id="user-input" placeholder="Сұрағыңызды жазыңыз..." required>
                 <button type="submit">📤 Жіберу</button>
             </form>
             <p class="counter">📊 Сұраныстар саны: <span id="request-counter">0</span></p>
@@ -490,19 +362,135 @@
     </main>
 
     <script>
-        // ЖАҢАРТЫЛҒАН API KEY (жұмыс істейтін)
-        const GROQ_API_KEY = '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';
-        
-        // Кэштеу және қателерді өңдеу
-        let requestCount = 0;
-        let isProcessing = false;
+        // ============================================================
+        // Groq API Configuration (тегін, CORS жоқ)
+        // Тіркелу: https://console.groq.com → API Keys → Create API Key
+        // ============================================================
+        const GROQ_API_KEY = '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';
+        const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+        const GROQ_MODEL = 'llama-3.1-8b-instant';
 
+        // Тілді анықтау функциясы
+        function detectLanguage(text) {
+            const cyrillicPattern = /[а-яёъѣіїґє]/i;
+            const latinPattern = /[a-z]/i;
+            const arabicPattern = /[\u0600-\u06FF]/;
+            
+            if (arabicPattern.test(text)) return 'ar';
+            
+            const cyrillicMatches = text.match(cyrillicPattern);
+            const latinMatches = text.match(latinPattern);
+            
+            if (cyrillicMatches && (!latinMatches || cyrillicMatches.length > latinMatches.length)) {
+                const kazakhPattern = /[қңөүұіәғҺһ]/i;
+                if (kazakhPattern.test(text)) return 'kk';
+                return 'ru';
+            }
+            
+            return 'en';
+        }
+
+        // System prompt тілге байланысты
+        function getSystemPrompt(language) {
+            const prompts = {
+                kk: `Сен - кәсіби және пайдалы ЖИ көмекші.
+
+МАҢЫЗДЫ ЕРЕЖЕЛЕР:
+1. Пайдаланушының хабарының тілін дәл анықта. Ол қазақша, орысша немесе ағылшынша болуы мүмкін.
+2. ЖАУАПТЫ ДӘЛ СОЛ ТІЛДЕ БЕР. Ешқашан тілдерді араластырма.
+3. Егер пайдаланушы қазақша сұраса, тек қазақша жауап бер.
+4. Егер пайдаланушы орысша сұраса, тек орысша жауап бер.
+5. Егер пайдаланушы ағылшынша сұраса, тек ағылшынша жауап бер.
+6. Жауап нақты, дәлелді және толық болуы керек.
+7. Кез келген сұраққа шынайы және пайдалы жауап бер.
+8. Білмеген сұрағың болса, "Кешіріңіз, бұл сұраққа жауап бере алмаймын" деп айт.
+
+Қазақ тілінде сөйлегенде, қазақ тілінің грамматикасын дұрыс қолдан.
+Орыс тілінде сөйлегенде, грамматиканы дұрыс қолдан.
+Ағылшын тілінде сөйлегенде, грамматиканы дұрыс қолдан.
+
+Сенің мақсатың - пайдаланушыға нақты және дұрыс көмектесу!`,
+                ru: `Ты - профессиональный и полезный ИИ-помощник.
+
+ВАЖНЫЕ ПРАВИЛА:
+1. Точно определи язык сообщения пользователя. Это может быть казахский, русский или английский.
+2. ОТВЕЧАЙ ТОЧНО НА ТОМ ЖЕ ЯЗЫКЕ. Никогда не смешивай языки.
+3. Если пользователь спрашивает на казахском, отвечай только на казахском.
+4. Если пользователь спрашивает на русском, отвечай только на русском.
+5. Если пользователь спрашивает на английском, отвечай только на английском.
+6. Ответ должен быть точным, аргументированным и полным.
+7. Отвечай честно и полезно на любой вопрос.
+8. Если не знаешь ответ, скажи: "Извините, я не могу ответить на этот вопрос".
+
+Твоя цель - помочь пользователю точно и правильно!`,
+                en: `You are a professional and helpful AI assistant.
+
+IMPORTANT RULES:
+1. Accurately detect the language of the user's message (Kazakh, Russian, or English).
+2. RESPOND EXACTLY IN THE SAME LANGUAGE. Never mix languages.
+3. If the user asks in Kazakh, respond only in Kazakh.
+4. If the user asks in Russian, respond only in Russian.
+5. If the user asks in English, respond only in English.
+6. The response must be accurate, well-reasoned, and complete.
+7. Respond honestly and helpfully to any question.
+8. If you don't know the answer, say: "Sorry, I cannot answer that question."
+
+Your goal is to help the user accurately and correctly!`
+            };
+            
+            switch(language) {
+                case 'kk': return prompts.kk;
+                case 'ru': return prompts.ru;
+                default: return prompts.en;
+            }
+        }
+
+        // ЖИ-ға сұрақ жіберу
+        async function sendToAI(message) {
+            const detectedLang = detectLanguage(message);
+            let systemPrompt = getSystemPrompt(detectedLang);
+            
+            // Қазақша үшін қосымша нұсқау
+            if (detectedLang === 'kk') {
+                systemPrompt += `\n\nҚосымша: Қазақ тіліндегі сөздерді дұрыс жазыңыз. "Нені", "қалай", "неге", "қашан" деген сөздерді дұрыс қолданыңыз. Ешқашан орыс сөздерін қоспаңыз.`;
+            }
+
+            const response = await fetch(GROQ_API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${GROQ_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: GROQ_MODEL,
+                    messages: [
+                        { role: "system", content: systemPrompt },
+                        { role: "user", content: message }
+                    ],
+                    temperature: 0.3,
+                    max_tokens: 2048,
+                    top_p: 0.9
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Groq API Error:", response.status, errorText);
+                throw new Error(`API қатесі (${response.status})`);
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content;
+        }
+
+        // Түс режимін ауыстыру
         function toggleDarkMode() {
             document.body.classList.toggle('dark');
             const btn = document.getElementById('dark-mode-btn');
             btn.textContent = document.body.classList.contains('dark') ? '☀️ Ашық тақырып' : '🌙 Қараңғы тақырып';
         }
 
+        // Анимацияларды орнату
         function setupScrollAnimations() {
             const cards = document.querySelectorAll('.card');
             const observer = new IntersectionObserver((entries) => {
@@ -513,98 +501,7 @@
             cards.forEach(card => observer.observe(card));
         }
 
-        // Тілді анықтау функциясы
-        function detectLanguage(text) {
-            const kazakhPattern = /[құңғүіөәшһӘҚҰҢҒҮІӨӘШҺ]/;
-            const russianPattern = /[аеиоуыэюяёъыАЕИОУЫЭЮЯЁЪЫ]/;
-            
-            if (kazakhPattern.test(text)) return 'kk';
-            if (russianPattern.test(text)) return 'ru';
-            return 'en';
-        }
-
-        async function sendToAI(message) {
-            const detectedLang = detectLanguage(message);
-            
-            let systemPrompt = `You are a helpful AI assistant. You MUST respond in EXACTLY the same language as the user's message.
-
-Language detection rules:
-- If user writes in Kazakh (contains letters: қ,ұ,ң,ү,і,ө,ә,ғ,һ), respond ONLY in Kazakh
-- If user writes in Russian (contains Cyrillic letters typical for Russian), respond ONLY in Russian  
-- If user writes in English (Latin alphabet without Kazakh-specific letters), respond ONLY in English
-
-NEVER mix languages. NEVER respond in a different language than the user used.
-
-Current detected language: ${detectedLang === 'kk' ? 'Kazakh' : detectedLang === 'ru' ? 'Russian' : 'English'}
-
-Examples:
-User: "Сәлем, қалайсың?" → Respond in Kazakh
-User: "Привет, как дела?" → Respond in Russian  
-User: "Hello, how are you?" → Respond in English
-
-Always follow this rule strictly.`;
-
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000);
-
-                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${GROQ_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: "mixtral-8x7b-32768",
-                        messages: [
-                            { role: "system", content: systemPrompt },
-                            { role: "user", content: message }
-                        ],
-                        temperature: 0.7,
-                        max_tokens: 1024
-                    }),
-                    signal: controller.signal
-                });
-
-                clearTimeout(timeoutId);
-
-                if (!response.ok) {
-                    let errorDetail = `HTTP ${response.status}`;
-                    try {
-                        const errorData = await response.json();
-                        errorDetail += `: ${errorData.error?.message || JSON.stringify(errorData)}`;
-                    } catch(e) {}
-                    throw new Error(errorDetail);
-                }
-
-                const data = await response.json();
-                
-                if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-                    throw new Error('Invalid API response structure');
-                }
-                
-                return data.choices[0].message.content;
-            } catch (error) {
-                console.error('Groq API Error:', error);
-                
-                if (error.name === 'AbortError') {
-                    throw new Error('Сервер жауап бермейді. Интернетіңізді тексеріңіз.');
-                }
-                
-                let errorMsg = 'Қате: ';
-                if (error.message.includes('429')) {
-                    errorMsg += 'Тым көп сұраныс! 1 минут күтіңіз.';
-                } else if (error.message.includes('401')) {
-                    errorMsg += 'API кілті жарамсыз.';
-                } else if (error.message.includes('500') || error.message.includes('503')) {
-                    errorMsg += 'Сервер уақытша қолжетімсіз. Қайталап көріңіз.';
-                } else {
-                    errorMsg += error.message;
-                }
-                throw new Error(errorMsg);
-            }
-        }
-
+        // Хабар қосу
         function addMessage(type, text, isLoading = false) {
             const chatWindow = document.getElementById('chat-window');
             const msg = document.createElement('div');
@@ -620,37 +517,35 @@ Always follow this rule strictly.`;
             return msg;
         }
 
+        let requestCount = 0;
+
+        // Документ жүктелгенде
         document.addEventListener('DOMContentLoaded', () => {
+            // Бастапқы хабарды қосу
+            const chatWindow = document.getElementById('chat-window');
+            const welcomeMsg = document.createElement('div');
+            welcomeMsg.className = 'message ai';
+            welcomeMsg.textContent = '👋 Сәлем! Мен ЖИ-көмекшісімін. Сұрағыңызды қазақша, орысша немесе ағылшынша қойсаңыз болады. Мен сіздің тіліңізде нақты және дұрыс жауап беремін!';
+            chatWindow.appendChild(welcomeMsg);
+            
             document.getElementById('dark-mode-btn').addEventListener('click', toggleDarkMode);
             setupScrollAnimations();
 
             const form = document.getElementById('chat-form');
             const input = document.getElementById('user-input');
             const counterEl = document.getElementById('request-counter');
-            
-            // Қош келу хабары
-            setTimeout(() => {
-                addMessage('ai', '💕 Сәлем! Мен ЖИ-көмекшімін. Сұрағыңызды қазақша, орысша немесе ағылшынша қойыңыз. Мен сіздің тіліңізде жауап беремін!');
-            }, 500);
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                
-                if (isProcessing) {
-                    addMessage('ai', '⏳ Өтінемін, күте тұрыңыз... Алдыңғы сұрақ өңделуде.');
-                    return;
-                }
-                
                 const userText = input.value.trim();
                 if (!userText) return;
 
                 addMessage('user', userText);
                 input.value = '';
-                
+
                 requestCount++;
                 counterEl.textContent = requestCount;
-                
-                isProcessing = true;
+
                 const loadingMsg = addMessage('ai', '', true);
 
                 try {
@@ -659,17 +554,7 @@ Always follow this rule strictly.`;
                     addMessage('ai', aiAnswer);
                 } catch (err) {
                     loadingMsg.remove();
-                    let userFriendlyError = '❌ ';
-                    if (err.message.includes('429')) {
-                        userFriendlyError += 'API шектеуі: 1 минутта 30 сұраныс. Біраз күтіңіз.';
-                    } else if (err.message.includes('сервер')) {
-                        userFriendlyError += 'Сервер қатесі. Бірнеше секундтан кейін қайталаңыз.';
-                    } else {
-                        userFriendlyError += err.message;
-                    }
-                    addMessage('ai', userFriendlyError);
-                } finally {
-                    isProcessing = false;
+                    addMessage('ai', '❌ Қате: ' + err.message);
                 }
             });
         });
